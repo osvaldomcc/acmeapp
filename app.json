@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "ACME",
+    "slug": "ACME",
+    "version": "1.0.0"
+  },
+  "name": "ACME",
+  "updates" : {
+    "fallbackToCacheTimeout" : 0
+  },
+  "ios": {
+    "supportsTablet": true,
+    "infoPlist":{
+      "NSRemindersUsageDescription": "This app uses the reminder permissions to sync calendar events"
+    }
+  },
+  "android":{
+    "permissions": ["WRITE_CALENDAR, READ_CALENDAR"]
+  },
+  "assetBundlePatterns": [
+    "**/*"
+  ]
+}
