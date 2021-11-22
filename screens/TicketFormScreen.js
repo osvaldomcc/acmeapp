@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   useWindowDimensions,
   TouchableWithoutFeedback,
+  Platform,
 } from "react-native";
 import { Icon, Input, Button } from "react-native-elements";
 import { theme } from "../core/theme";
@@ -130,17 +131,10 @@ const TicketFormScreen = ({ route, navigation }) => {
 
   //Function to validate date
   const handleDate = (e, selectDate) => {
-    if (selectDate !== undefined && mode === "time") {
-      setDate(selectDate);
-      setShowPicker(false);
-      return;
-    }
+    setShowPicker(false);
     if (selectDate !== undefined) {
       setDate(selectDate);
-      setMode("time");
-      return;
     }
-    setShowPicker(false);
   };
 
   //Function to show the date picker
@@ -314,7 +308,28 @@ const TicketFormScreen = ({ route, navigation }) => {
                           />
                         }
                         inputContainerStyle={styles.inputContainer}
-                        value={moment(date).format("M/D/YYYY, h:mm A")}
+                        value={moment(date).format("M/D/YYYY")}
+                      />
+                    </View>
+                  </TouchableWithoutFeedback>
+                  <TouchableWithoutFeedback
+                    onPress={() => handleShowPicker("time")}
+                  >
+                    <View>
+                      <Input
+                        key="clock"
+                        disabled={true}
+                        inputStyle={{ paddingLeft: 30 }}
+                        leftIcon={
+                          <Icon
+                            name="clock-o"
+                            size={20}
+                            type="font-awesome"
+                            color="lightgray"
+                          />
+                        }
+                        inputContainerStyle={styles.inputContainer}
+                        value={moment(date).format("h:mm A")}
                       />
                     </View>
                   </TouchableWithoutFeedback>
@@ -336,11 +351,11 @@ const TicketFormScreen = ({ route, navigation }) => {
                 </View>
                 {showPicker && (
                   <DateTimePicker
+                    display={Platform.OS === "ios" ? "spinner" : "default"}
                     style={{ borderWidth: 2, width: "100%", height: "100%" }}
                     testID="dateTimePicker"
                     value={date}
                     mode={mode}
-                    display="default"
                     onChange={handleDate}
                   />
                 )}
